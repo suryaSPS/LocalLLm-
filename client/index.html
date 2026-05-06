@@ -25,7 +25,6 @@
       <div class="msg system-note">Hold the mic button and speak. Release to send.</div>
     </div>
 
-    <!-- Shown after a <<LOG>> commit so user can undo -->
     <div id="log-notification" role="status" aria-live="assertive">
       <span class="log-text" id="log-text"></span>
       <button id="undo-btn" aria-label="Undo last log">Undo</button>
@@ -33,20 +32,10 @@
 
     <div id="controls">
       <div id="interim-text" aria-live="polite"></div>
-
       <button id="mic-btn" aria-label="Push to talk" aria-pressed="false">&#127908;</button>
       <div id="mic-hint">hold to talk</div>
-
-      <!-- Fallback text input, always available -->
       <div id="text-row">
-        <input
-          id="text-input"
-          type="text"
-          placeholder="Type a message…"
-          autocomplete="off"
-          autocorrect="off"
-          spellcheck="false"
-        />
+        <input id="text-input" type="text" placeholder="Type a message…" autocomplete="off" autocorrect="off" spellcheck="false" />
         <button id="send-btn" aria-label="Send">Send</button>
       </div>
     </div>
