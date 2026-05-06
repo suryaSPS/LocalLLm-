@@ -70,7 +70,7 @@ def _format_meals(meals: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def build_context() -> str:
+def build_context() -> dict:
     today_workout = get_today_workout()
     week_summary = get_week_summary()
     today_meals = get_today_meals()

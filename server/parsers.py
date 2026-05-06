@@ -21,7 +21,6 @@ def extract_log_block(text: str) -> tuple[str, Optional[dict]]:
     try:
         payload = json.loads(raw_json)
     except json.JSONDecodeError:
-        # Try to salvage by pulling the first JSON object we find
         obj_match = re.search(r"\{.*\}", raw_json, re.DOTALL)
         if obj_match:
             try:
