@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="GymAI" />
+  <meta name="theme-color" content="#0f0f0f" />
+
+  <title>Gym Assistant</title>
+
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>&#127947; Gym Assistant</h1>
+      <div id="status-dot" title="Server connection"></div>
+    </header>
+
+    <div id="transcript" role="log" aria-live="polite" aria-label="Conversation">
+      <div class="msg system-note">Hold the mic button and speak. Release to send.</div>
+    </div>
+
+    <!-- Shown after a <<LOG>> commit so user can undo -->
+    <div id="log-notification" role="status" aria-live="assertive">
+      <span class="log-text" id="log-text"></span>
+      <button id="undo-btn" aria-label="Undo last log">Undo</button>
+    </div>
+
+    <div id="controls">
+      <div id="interim-text" aria-live="polite"></div>
+
+      <button id="mic-btn" aria-label="Push to talk" aria-pressed="false">&#127908;</button>
+      <div id="mic-hint">hold to talk</div>
+
+      <!-- Fallback text input, always available -->
+      <div id="text-row">
+        <input
+          id="text-input"
+          type="text"
+          placeholder="Type a message…"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+        />
+        <button id="send-btn" aria-label="Send">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js" defer></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js');
+    }
+  </script>
+</body>
+</html>
