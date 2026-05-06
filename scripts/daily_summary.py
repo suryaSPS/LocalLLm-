@@ -4,15 +4,13 @@ Daily summary cron job.
 
 Run at 23:00 each day:
   crontab -e
-  0 23 * * * cd /path/to/gym-assistant && python scripts/daily_summary.py
+  0 23 * * * cd /path/to/gym-assistant && .venv/bin/python scripts/daily_summary.py
 
-Generates a journal entry summarising the day and appends it to
-data/journal.txt via the local LLM.
+Generates a journal entry summarising the day and appends it to data/journal.txt.
 """
 import sys
 import os
 
-# Allow running from repo root without installing
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from server.db import get_today_workout, get_today_meals, get_week_summary
@@ -44,10 +42,9 @@ Diet today:
 def run():
     from datetime import date
 
-    prompt = build_summary_prompt()
     messages = [
         {"role": "system", "content": "You write concise training journal entries."},
-        {"role": "user", "content": prompt},
+        {"role": "user", "content": build_summary_prompt()},
     ]
 
     print("Generating daily summary…")
