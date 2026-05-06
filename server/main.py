@@ -55,7 +55,7 @@ def on_startup():
 # ---------------------------------------------------------------------------
 class ChatRequest(BaseModel):
     message: str
-    history: list[dict] = []  # [{role, content}, ...]
+    history: list[dict] = []
 
 
 class LogSetRequest(BaseModel):
@@ -103,7 +103,6 @@ async def chat(req: ChatRequest, _=Depends(require_auth)):
     messages.extend(req.history)
     messages.append({"role": "user", "content": req.message})
 
-    # Collect full response so we can parse <<LOG>> after streaming
     full_response: list[str] = []
 
     async def generate():
@@ -111,13 +110,11 @@ async def chat(req: ChatRequest, _=Depends(require_auth)):
             full_response.append(chunk)
             yield chunk
 
-        # After stream ends, process any log block
         complete = "".join(full_response)
         _, payload = extract_log_block(complete)
         if payload:
             try:
                 confirmation = apply_log(payload)
-                # Send a special sentinel the client can detect
                 yield f"\n__LOG_COMMITTED__{json.dumps({'ok': True, 'detail': confirmation, 'payload': payload})}"
             except Exception as exc:
                 yield f"\n__LOG_COMMITTED__{json.dumps({'ok': False, 'detail': str(exc), 'payload': payload})}"
