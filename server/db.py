@@ -69,7 +69,6 @@ def get_or_create_today_workout() -> int:
 def log_set(exercise: str, weight_kg: Optional[float], reps: Optional[int],
             sets_count: int = 1, rpe: Optional[int] = None, notes: Optional[str] = None) -> list[int]:
     workout_id = get_or_create_today_workout()
-    today = date.today().isoformat()
     inserted_ids = []
     with get_conn() as conn:
         for _ in range(sets_count):
